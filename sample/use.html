@@ -58,9 +58,9 @@
                     .setCanvasDimensions(canvas)
                     .setFrames(150)
                     .setImg(texts['inthezone'])
-                    .setAnchor('center')
                     .setRotate({start:0,end:360,easing:'cubic'})
-                    .setOpacity({start:0.2,end:1});
+                    .setOpacity({start:0,end:1,endToEnd:true})
+                    .setMovement({start:{x:0,y:0},end:{x:300,y:300},endToEnd:true});
             });
             $('#startFreddie').click(function() {
                 inTheZone.animate([{img:freddie,loop:true},{img:inTheZone,start:150,loop:true}],canvas);
