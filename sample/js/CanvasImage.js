@@ -141,7 +141,6 @@ var CanvasImage = function(params) {
         if ((scaleObj.start !== undefined) && (scaleObj.end !== undefined)) {
             scaling.start = scaleObj.start;
             scaling.end = scaleObj.end;
-            console.log("scaling:");console.log(scaling);
         }
         if ((scaleObj.easing !== undefined) && (typeof scaleObj.easing == 'string')) {
             scaling.easing = Ease(frames,scaleObj.easing,{endToEnd:scaleObj.endToEnd});

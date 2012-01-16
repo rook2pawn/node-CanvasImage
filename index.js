@@ -141,7 +141,6 @@ var CanvasImage = function(params) {
         if ((scaleObj.start !== undefined) && (scaleObj.end !== undefined)) {
             scaling.start = scaleObj.start;
             scaling.end = scaleObj.end;
-            console.log("scaling:");console.log(scaling);
         }
         if ((scaleObj.easing !== undefined) && (typeof scaleObj.easing == 'string')) {
             scaling.easing = Ease(frames,scaleObj.easing,{endToEnd:scaleObj.endToEnd});
@@ -158,8 +157,8 @@ var CanvasImage = function(params) {
             position.end = posObj.end;
             if ((posObj.easing !== undefined) && (typeof posObj.easing == 'string')) {
                 position.easing = Ease(frames, posObj.easing,{endToEnd:posObj.endToEnd});
-            } else if (typeof posObj.easing == 'string') {
-                position.easing = Ease(frames, 'linear', {endToEnd:rotObj.endToEnd});
+            } else {
+                position.easing = Ease(frames, 'linear', {endToEnd:posObj.endToEnd});
             }
             parametric_x = function(t) {
                 return position.start.x + (position.end.x - position.start.x)*t;
@@ -211,6 +210,6 @@ var CanvasImage = function(params) {
                 clearInterval(myint);
             }
         };
-        var myint = setInterval(foo,50);
+        var myint = setInterval(foo,30);
     }
 }
