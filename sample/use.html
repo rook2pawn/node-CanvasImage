@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>
+    use case anim tests
+</title>
+<script src='js/browser-easing.js' type='text/javascript'></script>
+<script src='js/jquery-1.6.2.min.js' type='text/javascript'></script>
+<script src='js/images.js' type='text/javascript'></script>
+<script src='js/CanvasImage.js' type='text/javascript'></script>
+</head>
+<body>
+    <div class='canvas'>
+        <input type='button' id='startFreddie' value='start freddie'>
+        <canvas style="border:thin solid red;" id='mycanvas' width=600 height=400></canvas>
+    </div>
+    <script>
+        var Easing = require('easing');
+        var EE = require('events').EventEmitter;
+        var imageReady = new EE;
+        var readyList = {mercury:false,inthezone:false};
+        var freddie = new CanvasImage();
+        var inTheZone = new CanvasImage();
+        imageReady.on('notify',function(x) {
+            var alltrue = true;
+            if (readyList[x] !== undefined) {
+                readyList[x] = true;
+            }
+            Object.keys(readyList).forEach(function(x) {
+                if (readyList[x] == false) {
+                    alltrue = false;    
+                }
+            });
+            if (alltrue) {
+                imageReady.emit('imagesReady');    
+            }
+        });
+        $(document).ready(function() {
+            var canvas = $('#mycanvas').get(0);
+            characters['mercury'].img.onload = function() {
+                console.log("mercury ready");
+                imageReady.emit('notify','mercury');
+            };
+            texts['inthezone'].img.onload = function() {
+                console.log("in the zone ready");
+                imageReady.emit('notify','inthezone');
+            };
+            imageReady.on('imagesReady',function() {
+                console.log("images are all ready");
+                freddie
+                    .setCanvasDimensions(canvas)
+                    .setFrames(300)
+                    .setImg(characters['mercury'])
+                    .setAnchor('center')
+                    .setRotate({start:0,end:180,endToEnd:true})
+                    .setMovement({start:{x:0,y:-20},end:{x:300,y:100},easing:'sin',endToEnd:true})
+                    .setScaling({start:0.2,end:2});
+                inTheZone
+                    .setCanvasDimensions(canvas)
+                    .setFrames(150)
+                    .setImg(texts['inthezone'])
+                    .setAnchor('center')
+                    .setRotate({start:0,end:360,easing:'cubic'})
+                    .setOpacity({start:0.2,end:1});
+            });
+            $('#startFreddie').click(function() {
+                inTheZone.animate([{img:freddie,loop:true},{img:inTheZone,start:150,loop:true}],canvas);
+            });
+        });
+    </script>    
+</body>
+</html>
