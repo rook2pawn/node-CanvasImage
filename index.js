@@ -71,11 +71,3 @@ var CanvasImage = function() {
 }
 CanvasImage.Animation = animation;
 exports = module.exports = CanvasImage;
-/*
-    var load = new Preloader;
-        load.add('5thmedal.png')
-        .success(function() {
-        })
-        .error(function(msg) {})
-        .done();
-*/
