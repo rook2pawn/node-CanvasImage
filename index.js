@@ -12,6 +12,12 @@ var animation = function() {
     };
     this.animate = function(list,canv) {
         clearInterval(this.myinterval);
+        canv.getContext('2d').clearRect(0,0,canv.width,canv.height);
+        this.masterIndex = 0;
+        for (var i = 0; i < list.length; i++) {
+            list[i].done = false;
+            list[i].index = 0;
+        }
         var foo = function(){ 
             this.masterIndex++;
             var results = [];
