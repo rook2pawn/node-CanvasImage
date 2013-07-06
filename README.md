@@ -1,8 +1,9 @@
 CanvasImage
 ===========
 
-HTML5 Canvas Image animation with scripted playback plus audio!
+Create animations with indepedent movements out of images.
 
-Documentation coming, for now see sample/use.html
 
+Example
+=======
 

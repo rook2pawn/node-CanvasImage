@@ -1,0 +1,21 @@
+{
+  "author": "David Wee <rook2pawn@gmail.com> (http://rook2pawn.com)",
+  "name": "CanvasImage",
+  "version": "0.0.1",
+  "description": "CanvasImage - scripting animation on canvas",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rook2pawn/node-CanvasImage.git"
+  },
+  "dependencies": {
+    "imagepreloader" : "",
+    "easing" : ""
+  },
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "21e14d78b554106b5745f9d6a8e6f091b4365510",
+  "bugs": {
+    "url": "https://github.com/rook2pawn/node-CanvasImage/issues"
+  }
+}
