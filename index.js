@@ -1,5 +1,4 @@
 var lib = require('./lib');
-var Preloader = require('imagepreloader');
 var animation = function() {
     // draws all canvas in list onto canvasA
     this.masterIndex = 0;

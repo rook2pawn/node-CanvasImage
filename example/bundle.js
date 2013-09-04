@@ -9,6 +9,7 @@ $(window).ready(function() {
     .setFrames(100)
     .setImg('5thmedal.png',401,436)
     .setAnchor('center')
+    .setRotate({easing:'linear',start:0,end:360})
     .setScaling({easing:'sinusoidal',start:0.5,end:1});
     anim.animate([bar],canvas);
 });
@@ -28,6 +29,12 @@ var animation = function() {
     };
     this.animate = function(list,canv) {
         clearInterval(this.myinterval);
+        canv.getContext('2d').clearRect(0,0,canv.width,canv.height);
+        this.masterIndex = 0;
+        for (var i = 0; i < list.length; i++) {
+            list[i].done = false;
+            list[i].index = 0;
+        }
         var foo = function(){ 
             this.masterIndex++;
             var results = [];
@@ -87,73 +94,8 @@ var CanvasImage = function() {
 }
 CanvasImage.Animation = animation;
 exports = module.exports = CanvasImage;
-/*
-    var load = new Preloader;
-        load.add('5thmedal.png')
-        .success(function() {
-        })
-        .error(function(msg) {})
-        .done();
-*/
 
-},{"./lib":3,"imagepreloader":4}],4:[function(require,module,exports){
-;(function (exports) {
-    var ImageSet = function(params) {
-        if (params === undefined) 
-            params = {}
-        var list = params.obj || [];
-        var success = params.fn || undefined;
-        var error = params.fn2 || undefined;
-        var count = 0;
-        if (params.Image !== undefined)
-            Image = params.Image;
-        var myimages = [];
-        this.add = function(src) {
-            list.push(src);
-            return this
-        }
-        this.success = function(fn) {
-            success = fn;
-            return this
-        }
-        this.error = function(fn) {
-            error = fn;
-            return this
-        }
-        this.loaded = function() {
-            count++;
-            if (count === list.length) {
-                success(myimages);
-            }
-        };
-        this.done = function() {
-            if (success !== undefined)
-                list.forEach(function(src) {
-                    var that = this;
-                    var img = new Image();
-                    img.onerror = function() {
-                        if (error !== undefined) error("image load error!");
-                    };
-                    img.onabort = function() {
-                        if (error !== undefined) error("image load abort!");
-                    };
-                    img.onload = function() {
-                        that.loaded();
-                    };
-                    img.src = src;
-                    img.name = src.slice(src.lastIndexOf('/')+1);
-                    myimages.push(img);
-                },this);
-        };
-    };
-    if (exports.Window !== undefined) {
-        exports.Preloader = ImageSet;
-    } else if ((module !== undefined) && (module.exports !== undefined)) {
-        exports = module.exports = ImageSet;
-    }
-})(typeof exports === 'undefined' ?  this : exports)
-
-},{}],3:[function(require,module,exports){
+},{"./lib":3,"imagepreloader":5}],3:[function(require,module,exports){
 var Ease = require('easing');
 exports.setRotate = function (rotObj) {
     if ((rotObj.start !== undefined) && (rotObj.end !== undefined)) {
@@ -284,13 +226,13 @@ exports.draw = function(params) {
             this.myct.rotate(rotVal);
         }
         if (this.scaling.easing !== undefined) {
-            var scaleVal = ((this.scaling.end - this.scaling.start) * this.scaling.easing[this.index]);
+            var scaleVal = this.scaling.start + ((this.scaling.end - this.scaling.start) * this.scaling.easing[this.index]);
             this.myct.scale(scaleVal,scaleVal);
         }
         if (this.opacity.easing !== undefined) {
-            var opacVal = ((this.opacity.end - this.opacity.start) * this.opacity.easing[this.index]);
-            myct.globalAlpha = opacVal;
-        }
+            var opacVal = this.opacity.start + ((this.opacity.end - this.opacity.start) * this.opacity.easing[this.index]);
+            this.myct.globalAlpha = opacVal;
+        } 
         this.myct.drawImage(this.myimage.img,this.offx,this.offy,this.myimage.width,this.myimage.height);
         this.myct.restore();
         this.index++;
@@ -304,7 +246,7 @@ exports.draw = function(params) {
     return {canvas:this.mycanvas,index:this.index,frames:this.frames,done:this.done};
 };
 
-},{"easing":5}],5:[function(require,module,exports){
+},{"easing":4}],4:[function(require,module,exports){
 module.exports = exports = Easing;
 
 function Easing(list,type,options) {
@@ -382,6 +324,63 @@ function Easing(list,type,options) {
     }
     return list;
 };
+
+},{}],5:[function(require,module,exports){
+;(function (exports) {
+    var ImageSet = function(params) {
+        if (params === undefined) 
+            params = {}
+        var list = params.obj || [];
+        var success = params.fn || undefined;
+        var error = params.fn2 || undefined;
+        var count = 0;
+        if (params.Image !== undefined)
+            Image = params.Image;
+        var myimages = [];
+        this.add = function(src) {
+            list.push(src);
+            return this
+        }
+        this.success = function(fn) {
+            success = fn;
+            return this
+        }
+        this.error = function(fn) {
+            error = fn;
+            return this
+        }
+        this.loaded = function() {
+            count++;
+            if (count === list.length) {
+                success(myimages);
+            }
+        };
+        this.done = function() {
+            if (success !== undefined)
+                list.forEach(function(src) {
+                    var that = this;
+                    var img = new Image();
+                    img.onerror = function() {
+                        if (error !== undefined) error("image load error!");
+                    };
+                    img.onabort = function() {
+                        if (error !== undefined) error("image load abort!");
+                    };
+                    img.onload = function() {
+                        that.loaded();
+                    };
+                    img.src = src;
+                    img.name = src.slice(src.lastIndexOf('/')+1);
+                    myimages.push(img);
+                },this);
+        };
+    };
+    if (exports.Window !== undefined) {
+        exports.Preloader = ImageSet;
+    } else if ((module !== undefined) && (module.exports !== undefined)) {
+        exports = module.exports = ImageSet;
+    }
+})(typeof exports === 'undefined' ?  this : exports)
 
 },{}]},{},[1])
 ;
