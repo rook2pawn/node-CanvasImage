@@ -9,7 +9,7 @@ Example
 
     <canvas id='canvas' width=240 height=120></canvas>
 
-    var CanvasImage = require('CanvasImage');
+    var CanvasImage = require('canvas-image');
     $(window).ready(function() {
         var anim = new CanvasImage.Animation;
         var canvas = document.getElementById('canvas');
