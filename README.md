@@ -81,3 +81,53 @@ Governs scaling. start values can range from 0 to any number, and end values can
     .setMovement({start:{x:0,y:0},end:{x:100,y:100}});
 
     // goes from 0,0, to 100,100
+
+
+ANIMATION PACKAGE
+=================
+
+    var anim = new CanvasImage.Animation
+
+ANIMATION Methods
+=================
+
+anim.animate(list,canvasElement,cb) 
+-----------------------------------
+
+.animate will take a list of CanvasImage elements, draw them on the supplied canvasElement, then when the animation is finished, will execute the supplied
+callback if there is one. Here's an example
+
+
+    var CanvasImage = require('canvas-image');
+    var bar = new CanvasImage;
+    var cat = new CanvasImage;
+    var anim = new CanvasImage.Animation;
+    bar
+    .setDimensions(canv)
+    .setFrames(15)
+    .setImg('foo.png',199,32)
+    .setAnchor('center')
+    .setRotate({easing:'linear',start:0,end:360})
+    .setMovement({start:{x:-100,y:-100},end:{x:0,y:0}})
+    .setScaling({easing:'linear',start:0.2,end:1});
+    cat
+    .setDimensions(canv)
+    .setFrames(15)
+    .setImg('bar.png',135,32)
+    .setAnchor('center')
+    .setMovement({start:{x:100,y:100},end:{x:-200,y:0}})
+    .setScaling({easing:'linear',start:0.2,end:1});
+
+    var mycanvas = document.getElementById('mycanvas');
+    anim.animate([bar,cat],mycanvas,function() {
+        anim.dimmer(mycanvas);
+    });
+
+In this example, bar and cat are two indepedent CanvasImage elements that have positional, rotationl, and movement, and scaling elements over time.
+anim.animate takes these two and renders them onto a canvas with id mycanvas.
+Then, when the animation is finished, the callback is called and there is a convenience method called .dimmer that takes a canvas element and quickly
+reduces the opacity to 0 in a brief animation.
+
+anim.dimmer(canvasElement)
+--------------------------
+Takes a canvas element and reduces the opacity from 100% to 0% in a brief animation.

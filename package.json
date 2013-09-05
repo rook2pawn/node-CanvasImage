@@ -1,7 +1,7 @@
 {
   "author": "David Wee <rook2pawn@gmail.com> (http://rook2pawn.com)",
   "name": "canvas-image",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CanvasImage - scripting animation on canvas",
   "main": "index.js",
   "repository": {
