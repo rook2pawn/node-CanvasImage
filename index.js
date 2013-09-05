@@ -1,10 +1,12 @@
 var lib = require('./lib');
 var animation = function() {
+    this.width = undefined;
+    this.height = undefined;
     // draws all canvas in list onto canvasA
     this.masterIndex = 0;
     this.blend = function(canvasA, list) {
         var ct = canvasA.getContext('2d');
-        ct.clearRect(0,0,240,120)
+        ct.clearRect(0,0,this.width,this.height)
         for (var i = 0; i < list.length; i++) {
             ct.drawImage(list[i].canvas,0,0);
         }
@@ -12,6 +14,8 @@ var animation = function() {
     this.animate = function(list,canv) {
         clearInterval(this.myinterval);
         canv.getContext('2d').clearRect(0,0,canv.width,canv.height);
+        this.width = canv.width;
+        this.height = canv.height;
         this.masterIndex = 0;
         for (var i = 0; i < list.length; i++) {
             list[i].done = false;
