@@ -33,6 +33,9 @@ var animation = function() {
             scale--;
             if (scale >= 0) 
                 setTimeout(getdimmer,20);
+            else {
+                ctx.clearRect(0,0,width,height);
+            }
         };
         getdimmer();
     };
