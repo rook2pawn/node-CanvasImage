@@ -11,7 +11,7 @@ var animation = function() {
             ct.drawImage(list[i].canvas,0,0);
         }
     };
-    this.dimmer = function(canv) {
+    this.dimmer = function(canv,delay) {
         var ctx = canv.getContext('2d');
         var width = canv.width;
         var height = canv.height;
@@ -37,7 +37,10 @@ var animation = function() {
                 ctx.clearRect(0,0,width,height);
             }
         };
-        getdimmer();
+        if (delay !== undefined) {
+            setTimeout(getdimmer,delay);
+        } else 
+            getdimmer();
     };
     this.animate = function(list,canv,then) {
         clearInterval(this.myinterval);
