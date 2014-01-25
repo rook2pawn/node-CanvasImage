@@ -23,15 +23,14 @@ var animation = function() {
                 for (var x = 0; x < width; x++) {
                     var index = (y * width + x) * 4;
                     data[index+3] = Math.floor((scale/10)*data[index+3]);
-                    /*data[index]   = Math.floor((scale/10)*data[index]);
-                    data[index+1] = Math.floor((scale/10)*data[index+1]);
-                    data[index+2] = Math.floor((scale/10)*data[index+2]); 
-                    */
+                    //data[index]   = Math.floor((scale/10)*data[index]);
+                    //data[index+1] = Math.floor((scale/10)*data[index+1]);
+                    //data[index+2] = Math.floor((scale/10)*data[index+2]); 
                 }
             }
             ctx.putImageData(imageData, 0, 0);
             scale--;
-            if (scale >= 0) 
+            if (scale >= 0)
                 setTimeout(getdimmer,20);
             else {
                 ctx.clearRect(0,0,width,height);
@@ -42,6 +41,7 @@ var animation = function() {
         } else 
             getdimmer();
     };
+    this.myinterval = undefined;
     this.animate = function(list,canv,then) {
         clearInterval(this.myinterval);
         canv.getContext('2d').clearRect(0,0,canv.width,canv.height);
@@ -76,8 +76,9 @@ var animation = function() {
             }
             if (alldone) { 
                 clearInterval(this.myinterval);
-                if (then !== undefined) 
+                if (then !== undefined) {
                     then();
+                }
             }
         };
         this.myinterval = setInterval(foo.bind(this),30);
@@ -88,6 +89,12 @@ var CanvasImage = function() {
     this.myct = this.mycanvas.getContext('2d');
     this.canvasmidx;
     this.canvasmidy;
+
+    this.text;
+    this.textpos = {x : 0, y: 0};
+    this.font = '18px Arial';
+    this.align = 'center';
+
     this.myimage;
     this.offx;this.offy;
     this.frames = 60;
@@ -110,6 +117,7 @@ var CanvasImage = function() {
     this.setOpacity = lib.setOpacity.bind(this);
     this.setScaling = lib.setScaling.bind(this);
     this.setMovement = lib.setMovement.bind(this);
+    this.setText = lib.setText.bind(this);
 }
 CanvasImage.Animation = animation;
 exports = module.exports = CanvasImage;
