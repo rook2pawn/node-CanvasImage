@@ -86,9 +86,12 @@ var animation = function() {
 };
 var CanvasImage = function() {
     this.mycanvas = document.createElement('canvas');
+    
     this.myct = this.mycanvas.getContext('2d');
     this.canvasmidx;
     this.canvasmidy;
+    
+    this.order = []; // stores the order in which methods are called
 
     this.text;
     this.textpos = {x : 0, y: 0};
